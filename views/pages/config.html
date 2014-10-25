@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<% include ../partials/header %>
+</head>
+<body class="container-fluid">
+
+	<header>
+		<% include ../partials/navbar %>
+	</header>
+
+	<main>
+		<div class="jumbotron">
+			<center>
+			<h1>Configuration Générale</h1>
+			<p>Configuration des Constante du serveur</p>
+			</center>
+		</div>
+
+		<div class="jumbotron">
+			<div class="row cadre">
+				<center>
+					<h2 class="titre_cadre">Général</h2>
+				 	<p id="linknx_cadre">
+				 		<div class="form-group">
+							<label>Environement</label>
+							<span class="form-group" id="select_env_general">
+					            <select id="select_env">
+					            	<option value="null" class="placeholder_select">Environement</option>
+					                <option value="Developpement">Developpement</option>
+					                <option value="Production">Production</option>
+					            </select>
+					        </span>
+							<label>Port NodeJs</label>
+        					<input type="text" id="port_node" class="form-inline" placeholder="8777">
+						</div>
+				 	</p>
+			 	</center>
+			</div>
+
+			<div class="row cadre">
+				<center>
+					<h2 class="titre_cadre">Zibase</h2>
+					<p id="zibase_cadre" >
+						<div class="form-group">
+							<label>Ip Lan Zibase</label>
+							<input type="text" id="zibase_ip" class="form-inline" placeholder="192.168.1.x">
+							<label>Plateform Zibase</label>
+        					<input type="text" id="zibase_platform" class="form-inline" placeholder="zibase2.net">
+        					<label>Nom Zibase</label>
+         					<input type="text" id="zibase_nom" class="form-inline" placeholder="Xi10c9xxxxxxxxx">
+         					<label>Token Zibase</label>
+         					<input type="text" id="zibase_token" class="form-inline" placeholder="0c21xxxxxx">
+         					<label>Mode Debug</label>
+							<span class="form-group" id="select_debug_zibase_span">
+					            <select id="select_debug_zibase">
+					            	<option value="null" class="placeholder_select">Mode Debug</option>
+					                <option value="true">True</option>
+					                <option value="false">False</option>
+					            </select>
+					        </span>
+					        <label>Delai du Polling Zibase(ms)</label>
+					        <input type="text" id="delai_pooling_zibase" class="form-inline" placeholder="3000">
+							
+						</div>
+					</p>
+				</center>
+			</div>
+			<div class="row cadre">
+				<center>
+					<h2 class="titre_cadre">Linknx</h2>
+				 	<p id="linknx_cadre">
+				 		<div class="form-group">
+							<label>Ip Lan Linknx</label>
+							<input type="text" id="ip_linknx" class="form-inline" placeholder="192.168.1.x">
+							<label>Port Linknx</label>
+        					<input type="text" id="port_linknx" class="form-inline" placeholder="1028">
+        					<label>Port EventSource Linknx</label>
+         					<input type="text" id="port_linknx_event" class="form-inline" placeholder="80">
+         					<label>Delai du Polling linknx(ms)</label>
+							<input type="text" id="delai_pooling_linknx" class="form-inline" placeholder="3000">
+							
+						</div>
+				 	</p>
+			 	</center>
+			</div>
+			
+			<div class="row cadre">
+				<center>
+					<h2 class="titre_cadre">Fibaro HC2</h2>
+				 	<p id="hc2_cadre">
+				 		<div class="form-group">
+							<label>Ip Lan Fibaro HC2</label>
+							<input type="text" id="ip_hc2" class="form-inline" placeholder="192.168.1.x">
+							<label>Port Fibaro HC2</label>
+        					<input type="text" id="port_hc2" class="form-inline" placeholder="80">
+        					<label>Login Fibaro HC2</label>
+        					<input type="text" id="user_hc2" class="form-inline" placeholder="admin">
+        					<label>Pass Fibaro HC2</label>
+        					<input type="text" id="pass_hc2" class="form-inline" placeholder="admin">
+						</div>
+				 	</p>
+			 	</center>
+			</div>
+
+			<div class="row cadre">
+				<center>
+					<p id="linknx_cadre">
+				 		<div class="form-group">
+							<button class="btn-success btn-small" type="button" class="boutton_envoye" id="boutton_sauvegarde">Sauvegarder</button>
+						</div>
+				 	</p>
+			 	</center>
+			</div>
+		</div>
+
+
+	</main>
+
+	<footer>
+		<script src="js/domotique/domo_config.js"></script>
+		<script type="text/javascript">
+ 			$( document ).ready(function() {
+ 				recuperation_liste_variables();
+  			});
+		</script>
+		<% include ../partials/footer %>
+	</footer>
+	
+</body>
+</html>

@@ -1,0 +1,30 @@
+/* Style Personnel */
+.cadre{
+	 background-color: #FFFFFF;
+  color: #000000;
+  border: 2px groove #2F852C;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  text-align: center;
+  text-decoration: none;
+  position: relative;
+  border-radius: 10px;
+  margin-top: 10px;
+  background-color: #C9C9C9;
+  width: 100%;
+}
+.titre_cadre{
+	color: #3C2EFF;
+	text-decoration: underline ;
+}
+
+.margin_left{
+	margin-left: 5px;
+	height: 30px;
+}
+
+.placeholder_select {
+  color: #777;
+  opacity: 1;
+}

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<% include ../partials/header %>
+</head>
+<body class="container-fluid">
+
+	<header>
+		<% include ../partials/navbar %>
+	</header>
+
+	<main>
+		<div class="jumbotron">
+			<center>
+			<h1>Hub Domotique Cuesmes</h1>
+			<p>Communication entre les différent serveur domotique</p>
+			</center>
+		</div>
+		<div class="jumbotron">
+			<div class="row cadre">
+				<center>
+					<h2 class="titre_cadre">Zibase</h2>
+					<p id="zibase_cadre" >
+
+					</p>
+				</center>
+			</div>
+			<div class="row cadre">
+				<center>
+					<h2 class="titre_cadre">Linknx</h2>
+				 	<p id="linknx_cadre">
+				 		
+				 	</p>
+			 	</center>
+			</div>
+		</div>
+	</main>
+
+	<footer>
+		<script src="js/domotique/domo_index.js"></script>
+		<script type="text/javascript">
+ 			$( document ).ready(function() {
+ 				recuperation_liste_objet();
+ 				
+  			});
+		</script>
+		<% include ../partials/footer %>
+	</footer>
+	
+</body>
+</html>

@@ -1,0 +1,1 @@
+{"environement":"Developpement","port_nodejs":"8777","ip_linknx":"127.0.0.1","port_linknx":"1028","port_linknx_event":"80","zibase_ip":"192.168.1.7","zibase_platform":"zibase2.net","zibase_nom":"","zibase_token":"","zibase_debug":"false","env":"Developpement","ip_hc2":"","port_hc2":"80","user_hc2":"","pass_hc2":"","pooling_zibase":"5000","pooling_linknk":"5000"}

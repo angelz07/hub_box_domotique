@@ -1,0 +1,1 @@
+var liste_pooling_zibase = module.exports = {};

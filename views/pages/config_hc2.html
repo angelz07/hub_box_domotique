@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<% include ../partials/header %>
+</head>
+<body class="container-fluid">
+
+	<header>
+		<% include ../partials/navbar %>
+	</header>
+
+	<main>
+		<div class="jumbotron">
+			<center>
+			<h1>Configuration Lien Objet Linknx - Zibase avec HC2</h1>
+			<p>Configuration des Constante du serveur</p>
+			</center>
+		</div>
+
+		<div class="jumbotron">
+			<div class="row cadre">
+				<center>
+					<h2 class="titre_cadre">Lien Linknx HC2</h2>
+				 	<p id="p_lien_linknx_hc2">
+				 		<!-- 
+							
+							injection du code ici
+
+				 		-->
+				 	</p>
+				 	<p id="p_lien_linknx_hc2_add">
+				 		<!-- 
+							
+							injection du code ici
+
+				 		-->
+				 	</p>
+			 	</center>
+			</div>
+		</div>
+	</main>
+
+	<footer>
+		<script src="js/domotique/domo_config_hc2.js"></script>
+		<script type="text/javascript">
+ 			$( document ).ready(function() {
+ 				start_config();
+  			});
+		</script>
+		<% include ../partials/footer %>
+	</footer>
+	
+</body>
+</html>
