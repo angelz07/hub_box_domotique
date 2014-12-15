@@ -3,7 +3,8 @@ var config = require('./config.global');
 var fs = require("fs");
 
 exports.add_obj_hc2_linknx = function(id_hc2, id_linknx, new_type, res, callback){
-		var contenu;
+	//console.log("id linknx  = " + id_linknx + " Id HC2 = " + id_hc2 + " new_type = " + new_type)
+  	var contenu;
 	contenu = fs.readFile(config.dir_base+"/manager/variables_linknx_hc2.json", "utf8", function(err, data){
 	    if(err){
 	      console.log(err)
@@ -26,6 +27,7 @@ exports.add_obj_hc2_linknx = function(id_hc2, id_linknx, new_type, res, callback
 }
 
 exports.delete_obj_hc2_linknx = function(id_hc2, id_linknx, type, res, callback){
+	//console.log("DELETE --> id_hc2 = " + id_hc2 + " id_linknx = " + id_linknx + " type = " + type)
 	var contenu;
 	contenu = fs.readFile(config.dir_base+"/manager/variables_linknx_hc2.json", "utf8", function(err, data){
 	    if(err){
@@ -61,7 +63,19 @@ exports.delete_obj_hc2_linknx = function(id_hc2, id_linknx, type, res, callback)
 		  		update_var_liste_hc2_linknx(res, callback);
 	          }
 	        });
-		
+		 /*
+	    	data.Objets.push({'id_linknx': id_linknx ,'id_hc2': id_hc2, 'type': new_type});
+	    	data = JSON.stringify(data)
+	    	fs.writeFile(config.dir_base+"/manager/variables_linknx_hc2.json", data, function(err) {
+	          if (err) {
+	            // Erreur
+	            console.log('FAIL: ' + err.message)
+	          } else {
+	            // Succès :)
+		  		update_var_liste_hc2_linknx(res, callback);
+	          }
+	        });
+			*/
 	    }        
 	});
 }
@@ -81,7 +95,9 @@ exports.modif_obj_hc2_linknx = function(old_id_hc2, old_id_linknx, old_type, cha
    				var type_file = data.Objets[index].type;
 
    				if(id_linknx_file == old_id_linknx && id_hc2_file == old_id_hc2 && type_file == old_type){
-   					data.Objets[index].id_linknx = change_id_linknx;
+   					//console.log("IF MODIF --> old_id_hc2 = " + old_id_hc2 + " old_id_linknx = " + old_id_linknx + " old_type = " + old_type)
+					//console.log("IF MODIF --> change_id_hc2 = " + change_id_hc2 + " change_id_linknx = " + change_id_linknx + " change_type = " + change_type)
+					data.Objets[index].id_linknx = change_id_linknx;
 					data.Objets[index].id_hc2 = change_id_hc2;
 					data.Objets[index].type = change_type;
    				}
@@ -105,7 +121,8 @@ exports.modif_obj_hc2_linknx = function(old_id_hc2, old_id_linknx, old_type, cha
 function update_var_liste_hc2_linknx(res, callback){
 	var contenu;
 	contenu = fs.readFile(config.dir_base+"/manager/variables_linknx_hc2.json", "utf8", function(err, data){
-		 if(err){
+		//console.log(data)
+	    if(err){
 	      console.log(err)
 	    }else{
 	      	var data =  JSON.parse(data);
@@ -126,7 +143,7 @@ exports.update_var_liste_hc2_linknx_init = function(){
 	      	var data =  JSON.parse(data);
 	      	var liste_hc2_linknx = require('./liste_hc2_linknx');
 	      	liste_hc2_linknx.Objets = data.Objets;
-			
+			//console.log(liste_hc2_linknx)
 		}        
 	});
 }

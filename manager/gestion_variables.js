@@ -44,10 +44,13 @@ exports.update_variable = function(env, port_node, zibase_ip, zibase_platform, z
 	    if(err){
 	      console.log(err)
 	    }else{
+	    // console.log("env = " + env)
 	      var fichier_json = JSON.parse(data);
 	      var change_port_node = false;
 	      console.log(fichier_json.port_nodejs + " <---> "  + port_node)
 	      if(fichier_json.port_nodejs != port_node){
+	      		//console.log("port different")
+	      		
 	      		change_port_node = true;
 	      }
 	      else{
@@ -58,6 +61,8 @@ exports.update_variable = function(env, port_node, zibase_ip, zibase_platform, z
 
 	      var change_interval = false;
 	      if(fichier_json.pooling_linknk != pooling_linknk || fichier_json.pooling_zibase != pooling_zibase){
+	      		//console.log("port different")
+	      		
 	      		change_interval = true;
 	      }
 	      else{
@@ -99,7 +104,8 @@ exports.update_variable = function(env, port_node, zibase_ip, zibase_platform, z
 
 		  fichier_json = JSON.stringify(fichier_json)
 
-		
+		//  console.log(fichier_json)
+
 		  fs.writeFile(config.dir_base+"/manager/variables.json", fichier_json, function(err) {
 	          if (err) {
 	            // Erreur
@@ -112,6 +118,7 @@ exports.update_variable = function(env, port_node, zibase_ip, zibase_platform, z
 		  			callback_restart_node(port_node, res, callback);
 		  		}
 		  		else if(change_interval == true){
+		  			//console.log(fichier_json)
 		  			mise_a_jour_variable(fichier_json)
 		  			var cron_node = require('./cron')
 					var Stop_setIntervalLinknx = cron_node.setResetIntervalLinknx(false);
@@ -120,7 +127,11 @@ exports.update_variable = function(env, port_node, zibase_ip, zibase_platform, z
 						var Start_setIntervalLinknx = cron_node.setResetIntervalLinknx(true);
 						var Start_setIntervalZibase = cron_node.setResetIntervalZibase(true);
 					}, 2000);
-		  			
+		  			/*
+
+						callback_restart_node
+
+		  			*/
 		  			
 		  		}
 		  		else{
@@ -129,7 +140,7 @@ exports.update_variable = function(env, port_node, zibase_ip, zibase_platform, z
 
 		  			callback_liste_objet(vars_general,res);
 		  		}
-	           
+	            //console.log('OK');
 	          }
 	        });
 

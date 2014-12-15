@@ -31,7 +31,8 @@ module.exports=function(app)
 
 	/* Liste des objets domotique */
 	app.get('/liste_objet', function (req, res) {
-		 var json = require('../manager/variable_objets_box').json;
+		//http://192.168.1.25:8777/liste_objet
+	    var json = require('../manager/variable_objets_box').json;
 	    callback.callback_liste_objet(json,res);
 	});
 
@@ -39,11 +40,13 @@ module.exports=function(app)
 
 	/* Variables */
 	app.get('/liste_variables', function (req, res) {
-		 var json = require('../manager/variable_objets_box').json;
+		//http://192.168.1.25:8777/liste_variables
+	    var json = require('../manager/variable_objets_box').json;
 	    callback.callback_liste_objet(config,res);
 	});
 
 	app.get('/update_vars', function (req, res) {
+		///http://192.168.1.25:8777/update_vars?env=Production&port_node=8777&zibase_ip=192.168.1.7&zibase_platform=zibase2.net&zibase_nom=Xi10c9xe8d1bb05&zibase_token=0c21b4e68a&zibase_debug=false&ip_linknx=127.0.0.1&port_linknx=1028&port_linknx_event=80
 		var env = req.query.env;
     	var port_node = req.query.port_node;
     	var zibase_ip = req.query.zibase_ip;
@@ -56,7 +59,8 @@ module.exports=function(app)
     	var port_linknx_event = req.query.port_linknx_event;
 
 
-       var ip_hc2 = req.query.ip_hc2;
+        // + "&ip_hc2=" + ip_hc2 + "&port_hc2=" + port_hc2 + "&user_hc2=" + user_hc2 + "&pass_hc2=" + pass_hc2
+    	var ip_hc2 = req.query.ip_hc2;
         var port_hc2 = req.query.port_hc2;
         var user_hc2 = req.query.user_hc2;
         var pass_hc2 = req.query.pass_hc2;
@@ -74,16 +78,26 @@ module.exports=function(app)
     	console.log("Demande = " + demande)
        // console.log(req)
     	if(demande == "zibase"){
+    		//http://192.168.1.25:8777/send_cmd?demande=zibase&id=ZA7&nom=Wallplug&type=on_off&protocol=ZWave%20n6&value=on
+    		//http://192.168.1.25:8777/send_cmd?demande=zibase&id=A1&nom=Prise%20Rf%20Cuisine&type=on_off&protocol=Chacon&value=on
     		var zibase = require('../manager/zibase/zibase');
     		var id = req.query.id;
-     		var value = req.query.value;
+    		//var nom = req.query.nom;
+    		//var type = req.query.type;
+    		//var protocol = req.query.protocol;
+    		var value = req.query.value;
     		var send_cmd = zibase.send_cmd(id, value, res)
     		res.end();
     	}
 	   	else if(demande == "linknx"){
-			var linknx = require('node-linknx');
+	   		//http://192.168.1.25:8777/send_cmd?demande=linknx&id=Lumiere_Salle_a_Manger_Lustre_Table_Cmd&nom=Lustre%20Salle%20%C3%A0%20Mang%C3%A9e&type=on_off&protocol=knx&value=off
+    		var linknx = require('node-linknx');
     		var id = req.query.id;
+    		//var nom = req.query.nom;
+    		//var type = req.query.type;
+    		//var protocol = req.query.protocol;
     		var value = req.query.value;
+            console.log("id hc2 ---- >"  + id)
 			var send_cmd = linknx.change_state(config.ip_linknx,config.port_linknx,id,value,callback.callback_log);
     		res.end();
     	}
@@ -122,6 +136,7 @@ module.exports=function(app)
     app.get('/linknx_hc2',function(req,res){
         var demande = req.query.demande;
         console.log("Demande = " + demande)
+       // console.log(req)
         if(demande == "record_lien_linknx_hc2"){
            var id_hc2 = req.query.new_id_hc2;
            var id_linknx = req.query.new_id_linknx; 
@@ -148,6 +163,8 @@ module.exports=function(app)
            var change_type = req.query.change_type;
 
 
+//old_id_linknx=" + old_id_linknx + "&old_id_hc2=" + old_id_hc2 + "&old_type=" + old_type +
+// "&change_id_linknx=" + change_id_linknx + "&change_id_hc2=" + change_id_hc2 + "&change_type=" + change_type 
            var linknx_hc2_modif_obj =  linknx_hc2.modif_obj_hc2_linknx(old_id_hc2, old_id_linknx, old_type, change_id_hc2, change_id_linknx, change_type, res, callback.callback_liste_objet)
         }
 
@@ -194,12 +211,19 @@ module.exports=function(app)
         
     });
 
+// http://192.168.1.25:8777/linknx_hc2?demande=record_lien_linknx_hc2&new_id_hc2=555&new_id_linknx=id_standby"
+
+
 
 app.get('/test',function(req,res){
         var http = require('http');
     
 
-     var data = ' {"args":["Volet_cuisine_porte_status", "64.8"]}'
+    //var data = querystring.stringify({
+    //    args: "[88]"
+    //    password: " pass"
+    //  });
+    var data = ' {"args":["Volet_cuisine_porte_status", "64.8"]}'
     console.log("data = " + data)
     var auth = 'Basic ' + new Buffer("admin:admin").toString('base64');
     var options = {
@@ -231,6 +255,26 @@ app.get('/test',function(req,res){
     });
 
 
+/*
 
+*/
 
 }
+
+/*
+var Liste_objects_linknx = new Array();
+Liste_objects_linknx = '{"objects":['
+Liste_objects_linknx = Liste_objects_linknx + '{"id":"Lumiere_Chambre_2_Rue_Status"},'
+Liste_objects_linknx = Liste_objects_linknx + '{"id":"Lumiere_Petite_Buanderie_Plafond_Status"},'
+Liste_objects_linknx = Liste_objects_linknx + '{"id":"Chauffage_salle_a_mangee_temp_ambiante"},'
+Liste_objects_linknx = Liste_objects_linknx + '{"id":"Chauffage_cuisine_setpoint_in"},'
+Liste_objects_linknx = Liste_objects_linknx + '{"id":"Chauffage_cuisine_mode_choix"},'
+Liste_objects_linknx = Liste_objects_linknx + '{"id":"Arduino_remise_3_status"},'
+Liste_objects_linknx = Liste_objects_linknx + '{"id":"Lumiere_Chambre_2_Cote_Ensemble_Cmd"},'
+Liste_objects_linknx = Liste_objects_linknx + '{"id":"Lumiere_Salle_a_Manger_Lustre_Table_Cmd"}'
+Liste_objects_linknx = Liste_objects_linknx + ']}';
+Liste_objects_linknx = JSON.parse(Liste_objects_linknx);
+Puis On appel la fonction:
+
+var multi_status_linknx = linknx.status_multi(HOST,PORT,Liste_objects_linknx, callback);
+*/

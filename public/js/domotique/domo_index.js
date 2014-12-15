@@ -42,6 +42,8 @@ function affichage_cadre_commande(liste_json){
 			html = html + '<input type="text" id="type_zibase" class="form-inline margin_left" placeholder="Type" readonly="readonly">';
 			html = html + '<span class="form-group margin_left" id="select_zibase_valeur">';
 			html = html + '<select >';
+			//html = html + '<option value="on">on</option>';
+			//html = html + '<option value="off">off</option>';
 			html = html + '</select>';
 			html = html + '</span>';
 			html = html + '<button class="btn-success btn-small margin_left" type="button"  id="boutton_envoye_zibase">Envoyer</button>';
@@ -90,6 +92,7 @@ function affichage_cadre_commande(liste_json){
 			  var value = $( "#select_zibase_valeur > select option:selected" ).val();
 
 			  if(nom != "null" && id != "" && type != "" && type != "" && protocol != "" && value != "undefined"){
+			  	//alert("id = " + id + " --> nom = " + nom + " --> type = " + type + " --> protocol = " + protocol + " --> value = " + value )
 			  	var url = "/send_cmd?demande=zibase&id=" + id + "&nom=" + nom + "&type=" + type + "&protocol=" + protocol + "&value=" + value;
 			  	$.ajax({
 			        type: "GET",
@@ -144,6 +147,8 @@ function affichage_cadre_commande(liste_json){
 				html = html + '<input type="text" id="type_linknx" class="form-inline margin_left" placeholder="Type" readonly="readonly">';
 				html = html + '<span class="form-group margin_left" id="select_linknx_valeur">';
 				html = html + '<select >';
+				//html = html + '<option value="on">on</option>';
+				//html = html + '<option value="off">off</option>';
 				html = html + '</select>';
 				html = html + '</span>';
 				html = html + '<button class="btn-success btn-small margin_left " type="button" id="boutton_envoye_linknx">Envoyer</button>';
@@ -187,6 +192,7 @@ function affichage_cadre_commande(liste_json){
 			  var value = $( "#select_linknx_valeur > select option:selected" ).val();
 
 			  if(nom != "null" && id != "" && type != "" && type != "" && protocol != "" && value != "undefined"){
+			  	//alert("id = " + id + " --> nom = " + nom + " --> type = " + type + " --> protocol = " + protocol + " --> value = " + value )
 			  	var url = "/send_cmd?demande=linknx&id=" + id + "&nom=" + nom + "&type=" + type + "&protocol=" + protocol + "&value=" + value;
 			  	$.ajax({
 			        type: "GET",

@@ -3,7 +3,7 @@ var option_select_type = '<option class="type_select" value="volet" data-id="vol
 option_select_type = option_select_type + '<option class="type_select" value="temperature" data-id="temperature">temperature</option>';
 option_select_type = option_select_type + '<option class="type_select" value="switch" data-id="switch">switch</option>';
 option_select_type = option_select_type + '<option class="type_select" value="mode_chauffage" data-id="mode_chauffage">mode_chauffage</option>';
-option_select_type = option_select_type + '<option class="type_select" value="mode_chauffage" data-id="dimer">dimer</option>';
+option_select_type = option_select_type + '<option class="type_select" value="dimer" data-id="dimer">dimer</option>';
 
 
 

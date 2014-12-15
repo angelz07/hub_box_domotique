@@ -19,6 +19,65 @@ var linknx = require('node-linknx');
 var update_var_listes_pooling_init = require('./manager/pooling').update_var_listes_pooling_init();
 
 
+// clean exceptions from a previous load (refresh case)
+	if(process._events.uncaughtException){
+		if(process._events.uncaughtException.length > 0){
+       		process._events.uncaughtException.splice(0,1);
+   		}
+	}
+    
+    process.on('uncaughtException', function(e){
+        console.log('Node uncaughtException');
+        
+        console.log(e);
+        var rgxp_error = /ECONNRESET/i
+  		var match_error = rgxp_error.test(e);
+  		if ( match_error == true ){
+		    var exec = require('child_process').exec;
+			exec('shutdown -r now', function(error, stdout, stderr) {
+			    console.log('stdout: ' + stdout);
+			    console.log('stderr: ' + stderr);
+			    if (error !== null) {
+			        console.log('exec error: ' + error);
+			    }
+			});
+		  }
+
+
+		var rgxp_error_2 = /EMFILE/i
+  		var match_error_2 = rgxp_error_2.test(e);
+  		if ( match_error_2 == true ){
+		    var exec = require('child_process').exec;
+			exec('shutdown -r now', function(error, stdout, stderr) {
+			    console.log('stdout: ' + stdout);
+			    console.log('stderr: ' + stderr);
+			    if (error !== null) {
+			        console.log('exec error: ' + error);
+			    }
+			});
+		  }
+
+		/*else{
+			var exec = require('child_process').exec;
+			exec('shutdown -r now', function(error, stdout, stderr) {
+			    console.log('stdout: ' + stdout);
+			    console.log('stderr: ' + stderr);
+			    if (error !== null) {
+			        console.log('exec error: ' + error);
+			    }
+			});
+		} */ 
+       /* */
+    });
+    // Clean Buggy thing
+    if(process._events.uncaughtException){
+    	if(process._events.uncaughtException.length > 1 
+        && !!process._events.uncaughtException[0].toString().match(/native code/)
+	    ){
+	        process._events.uncaughtException.splice(0,1);
+	    }
+    }
+    
 
 
 /* Delai de 5 seconde pour la mise a jour des vairables */
@@ -37,12 +96,10 @@ setTimeout(function() {
 	/* Cron */
 	setTimeout(function() {
 		var cron_node = require('./manager/cron')
-
-		var Start_setResetIntervalLinknx = cron_node.setResetIntervalLinknx(true);
-		var Start_setResetIntervalZibase = cron_node.setResetIntervalZibase(true);
+		//test()
+		//var Start_setResetIntervalLinknx = cron_node.setResetIntervalLinknx(true);
+		//var Start_setResetIntervalZibase = cron_node.setResetIntervalZibase(true);
 	}, 2000);
 }, 5000);
-
-
 
 

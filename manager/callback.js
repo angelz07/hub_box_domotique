@@ -16,7 +16,9 @@ exports.callback_event = function(arg){
 
 exports.callback_event_linknx = function(arg){
 
-	
+	console.log("-------------------   callback_event_linknx  -------------------------" )
+	console.log(arg)
+	console.log("-------------------   FIN callback_event_linknx  -------------------------" )
 	var id = arg.notify[0].id;
 	var value = arg.notify[0].value;
 	
@@ -48,6 +50,23 @@ exports.callback_event_linknx = function(arg){
 				send_http_request_to_hc2(data, path_hc2);
 			}
 			/* Fin mode chauffage */
+			/* Type switch */
+			if(type == "switch"){
+				var data = '{"args":["' + id + '", "' + value + '"]}'
+				var path_hc2 = '/api/devices/' + id_hc2 + '/action/receive_data'
+				//console.log(data)
+				send_http_request_to_hc2(data, path_hc2);
+			}
+			/* Fin switch */
+			/* Type mode dimer */
+			if(type == "dimer"){
+				//console.log("test")
+				var data = '{"args":["' + id + '", "' + value + '"]}'
+				var path_hc2 = '/api/devices/' + id_hc2 + '/action/receive_data'
+				//console.log(data)
+				send_http_request_to_hc2(data, path_hc2);
+			}
+			/* Fin mode dimer */
 			/* Type temperature */
 			if(type == "temperature"){
 				var data = '{"args":["' + id + '", "' + value + '"]}'
@@ -61,21 +80,28 @@ exports.callback_event_linknx = function(arg){
 }
 
 exports.callback_event_linknx_force = function(arg){
-	
+	 
 	var objs = arg.objects[0];
-	objs = JSON.parse(objs)
-	var id = objs.id;
-	var value = objs.value;
+	//console.log('-----------objs AVANT PARSE------------')
+    // console.dir(objs)
+	//objs = JSON.parse(objs)
 	
+	var id = objs.id;
+	
+	var value = objs.value;
+	//console.log("id = " + id + " value = " + value)
+
 	var liste_hc2_linknx = require('./liste_hc2_linknx');
+	
 	liste_hc2_linknx.Objets.forEach(function (item, index) {
 	        
 		var id_linknx = liste_hc2_linknx.Objets[index].id_linknx;
 		var id_hc2 = liste_hc2_linknx.Objets[index].id_hc2;
 		var type = liste_hc2_linknx.Objets[index].type;
 
+		
 		if(id_linknx == id){
-			
+	//		console.log(type)
 			/* Type Volet */
 			if(type == "volet"){
 				var is_number = isNaN(value);
@@ -96,6 +122,23 @@ exports.callback_event_linknx_force = function(arg){
 				send_http_request_to_hc2(data, path_hc2);
 			}
 			/* Fin mode chauffage */
+			/* Type mode switch */
+			if(type == "switch"){
+				var data = '{"args":["' + id + '", "' + value + '"]}'
+				var path_hc2 = '/api/devices/' + id_hc2 + '/action/receive_data'
+				//console.log(data)
+				send_http_request_to_hc2(data, path_hc2);
+			}
+			/* Fin mode switch */
+			/* Type mode dimer */
+			if(type == "dimer"){
+				console;log("test")
+				var data = '{"args":["' + id + '", "' + value + '"]}'
+				var path_hc2 = '/api/devices/' + id_hc2 + '/action/receive_data'
+				//console.log(data)
+				send_http_request_to_hc2(data, path_hc2);
+			}
+			/* Fin mode dimer */
 			/* Type temperature */
 			if(type == "temperature"){
 				var data = '{"args":["' + id + '", "' + value + '"]}'
@@ -108,8 +151,11 @@ exports.callback_event_linknx_force = function(arg){
 	});
 }
 function send_http_request_to_hc2(data, path_hc2){
+	console.log("-------------------   send_http_request_to_hc2  -------------------------" )
 	console.log(path_hc2)
 	console.log(data)
+	console.log("-------------------   FIN send_http_request_to_hc2  -------------------------" )
+	
 	var http = require('http');
 	var auth = 'Basic ' + new Buffer(config.user_hc2 + ":" + config.pass_hc2).toString('base64');
 	var options = {
@@ -126,13 +172,23 @@ function send_http_request_to_hc2(data, path_hc2){
 
 	var httpreq = http.request(options, function (response) {
 	    response.setEncoding('utf8');
+	  //  console.log(response.body);
 	    response.on('data', function (chunk) {
 	     console.log("body: " + chunk);
 	    });
 	    response.on('end', function() {
 	   	console.log('ok')
+	    // res.send('ok');
 	  })
+
+
 	});
+
+	httpreq.on('error', function(e) {
+		  console.log('problem with request: ' + e.message);
+		});
+
+	
   	httpreq.write(data);
   	httpreq.end();
 }
@@ -154,15 +210,24 @@ exports.callback_log = function(arg, res){
 }
 
 exports.callback_etat = function(arg, res){
+	//var argString = JSON.stringify(arg);
 	res.header("Content-Type", "application/json");
 	res.header('Last-Modified', (new Date()).toUTCString());
-    res.send(arg);
-    res.end();
+	//res.header('Content-Length', arg.length);
+	//argString = argString.replace('\\"', '')
+    var argString = JSON.stringify(arg, 0, 4);
+
+    argString = argString.replace(/\\/g, "")
+	console.log(argString)
+    //res.send(arg);
+    res.end(argString);
 
 }
 
 exports.callback_restart_node = function(port_node, res, callback){
+	//var json = '{"reload":['; 
 	var json = '{"port_change":"'+ port_node + '"}' ;
+	//json = json + ']}'; // fin objets general
 	json = JSON.parse(json);
 
 	res.header("Content-Type", "application/json");
@@ -179,5 +244,5 @@ exports.callback_restart_node = function(port_node, res, callback){
 	}, 2000);
     
 
-
+ 
 }

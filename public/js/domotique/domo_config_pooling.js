@@ -16,6 +16,7 @@ function recuperation_liste_linknx(){
               function (retour) {
               	if (retour) {
 	              	option_select_id_linknx = '';
+	              	//console.log(retour)
 	              	retour.objets.forEach(function (item, index) {
 	        
 	       				var id_linknx = retour.objets[index].id_linknx;
@@ -78,6 +79,8 @@ function div_new_objet_linknx() {
         var valueSelected = this.value;
     });
 
+    
+    //ask_list_objet();
 }
 
 function add_objet_linknx_pooling(){
@@ -86,7 +89,7 @@ function add_objet_linknx_pooling(){
 
     if (new_description_linknx_objet_pooling != "" && new_id_linknx_pooling != "null" ) {
        
-
+       // wait_db_icon("start")
         $.ajax({
             type: "GET",
             url: "/pooling_config?demande=add_pooling_linknx&id_linknx=" + new_id_linknx_pooling + "&description=" + new_description_linknx_objet_pooling ,
@@ -139,6 +142,7 @@ function affichage_variables_linknx(arg){
         html = html + '</td>';
     		
 		html = html + '</tr>';
+		//console.log(id_linknx)
 	});
 
 	html = html + '</tbody>';
@@ -185,11 +189,13 @@ function wait_db_icon(arg) {
         var dialog = new BootstrapDialog({
             title: '<center>Op&eacute;ration en cours...</center>',
              message: '<center><i class="fa fa-spinner fa-spin fa-5x"></i></center>',
+           // cssClass: 'wait_modal',
             closable: false,
             closeByBackdrop: false,
             closeByKeyboard: false,
         });
        dialog.realize();
+       // dialog.getModalHeader().hide();
        dialog.getModalFooter().hide();
        dialog.getModalBody().css('background-color', '#0088cc');
        dialog.getModalBody().css('color', '#fff');
