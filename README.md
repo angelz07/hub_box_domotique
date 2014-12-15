@@ -23,3 +23,8 @@ ouvrir une page internet avec l'adresse :
 http://ip-nodejs:8777
 
 le port peut etre changer par après.
+
+
+modifier le fichier :
+manager/variables.json
+avec vos parametres.
